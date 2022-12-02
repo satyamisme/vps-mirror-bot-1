@@ -26,5 +26,7 @@ requests
 telegraph
 tenacity
 tgCrypto
+cloudscraper
 xattr
 yt-dlp
+cfscrape
