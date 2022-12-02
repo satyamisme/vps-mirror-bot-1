@@ -10,7 +10,9 @@ from bot.helper.telegram_helper.filters import CustomFilters
 from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.mirror_utils.status_utils.clone_status import CloneStatus
 from bot import dispatcher, LOGGER, download_dict, download_dict_lock, Interval, config_dict
-from bot.helper.ext_utils.bot_utils import is_gdrive_link, new_thread
+from bot.helper.ext_utils.bot_utils import is_gdrive_link, new_thread, is_gdtot_link, is_appdrive_link, is_gp_link, is_mdisk_link, is_dl_link, is_ouo_link, is_htp_link, is_rock_link, is_kolop_link, is_gt_link, is_psm_link, is_loan_link, is_ola_link, is_try2link_link, is_htpm_link, is_ez4_link
+from bot.helper.mirror_utils.download_utils.direct_link_generator import gdtot, appdrive_dl, gplinks, mdisk, dlbypass, ouo, htp, rock, kolop_dl, gt, psm, loan, ola, try2link, htpm, ez4
+from bot.helper.ext_utils.exceptions import DirectDownloadLinkException
 
 
 def _clone(message, bot):
@@ -34,6 +36,67 @@ def _clone(message, bot):
             tag = f"@{reply_to.from_user.username}"
         else:
             tag = reply_to.from_user.mention_html(reply_to.from_user.first_name)
+                msg = sendMessage(f"droplink_bypassed-Jack:<code>{link}</code>", bot, message) 
+        except DirectDownloadLinkException as e:
+            deleteMessage(bot, msg)
+            return sendMessage(str(e), bot, message)
+    is_mdisk = is_mdisk_link(link)
+    if is_mdisk:
+        try:
+            msg = sendMessage(f"Processing: <code>{link}</code>", bot, message)
+            link = mdisk(link)
+            deleteMessage(bot, msg)
+            msg = sendMessage(f"mdisk_bypassed-Jack:<code>{link}</code>", bot, message) 
+        except DirectDownloadLinkException as e:
+            deleteMessage(bot, msg)
+            return sendMessage(str(e), bot, message)
+    is_loan = is_loan_link(link)
+    if is_loan:
+        try:
+            msg = sendMessage(f"Processing: <code>{link}</code>", bot, message)
+            link = loan(link)
+            deleteMessage(bot, msg)
+            msg = sendMessage(f"link_bypassed-Jack:<code>{link}</code>", bot, message) 
+        except DirectDownloadLinkException as e:
+            deleteMessage(bot, msg)
+            return sendMessage(str(e), bot, message)
+    is_try2link = is_try2link_link(link)
+    if is_try2link:
+        try:
+            msg = sendMessage(f"Processing: <code>{link}</code>", bot, message)
+            link = try2link(link)
+            deleteMessage(bot, msg)
+            msg = sendMessage(f"try2link_bypassed-Jack:<code>{link}</code>", bot, message) 
+        except DirectDownloadLinkException as e:
+            deleteMessage(bot, msg)
+            return sendMessage(str(e), bot, message)
+    is_gdtot = is_gdtot_link(link)
+    if is_gdtot:
+        try:
+            msg = sendMessage(f"Processing: <code>{link}</code>", bot, message)
+            link = gdtot(link)
+            deleteMessage(bot, msg)
+        except DirectDownloadLinkException as e:
+            deleteMessage(bot, msg)
+            return sendMessage(str(e), bot, message)
+    is_appdrive = is_appdrive_link(link)
+    if is_appdrive:
+        try:
+            msg = sendMessage(f"Processing:<code>{link}</code>", bot, message)
+            link = appdrive_dl(link)
+            deleteMessage(bot, msg)
+        except DirectDownloadLinkException as e:
+            deleteMessage(bot, msg)
+            return sendMessage(str(e), bot, message)
+    is_kolop = is_kolop_link(link)
+    if is_kolop:
+        try:
+            msg = sendMessage(f"Processing: <code>{link}</code>", bot, message)
+            link = kolop_dl(link)
+            deleteMessage(bot, msg)
+        except DirectDownloadLinkException as e:
+            deleteMessage(bot, msg)
+            return sendMessage(str(e), bot, message)
     if is_gdrive_link(link):
         gd = GoogleDriveHelper()
         res, size, name, files = gd.helper(link)
