@@ -95,19 +95,14 @@ if DATABASE_URL:
     DATABASE_URL = environ.get('DATABASE_URL', '')
 else:
     config_dict = {}
-try:
-    CRYPT = getConfig('CRYPT')
-    if len(CRYPT) == 0:
-        raise KeyError
-except:
-    CRYPT = None
 
-try:
-    KOLOP_CRYPT = getConfig('KOLOP_CRYPT')
-    if len(PWSSD) == 0:
-        raise KeyError
-except KeyError:
-    KOLOP_CRYPT = None
+CRYPT = environ.get('CRYPT', '')
+if len(CRYPT) == 0:
+    CRYPT = ''
+KOLOP_CRYPT = environ.get('KOLOP_CRYPT', '')
+if len(KOLOP_CRYPT) == 0:
+    KOLOP_CRYPT = ''
+
 OWNER_ID = environ.get('OWNER_ID', '')
 if len(OWNER_ID) == 0:
     log_error("OWNER_ID variable is missing! Exiting now")
