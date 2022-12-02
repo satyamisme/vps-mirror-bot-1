@@ -95,7 +95,36 @@ if DATABASE_URL:
     DATABASE_URL = environ.get('DATABASE_URL', '')
 else:
     config_dict = {}
-
+try:
+    CRYPT = getConfig('CRYPT')
+    if len(CRYPT) == 0:
+        raise KeyError
+except:
+    CRYPT = None
+try:
+    EMAIL = getConfig('EMAIL')
+    if len(EMAIL) == 0:
+        raise KeyError
+except KeyError:
+    EMAIL = None
+try:
+    PWSSD = getConfig('PWSSD')
+    if len(PWSSD) == 0:
+        raise KeyError
+except KeyError:
+    PWSSD = None
+try:
+    CLONE_LOACTION = getConfig('CLONE_LOACTION')
+    if len(CLONE_LOACTION) == 0:
+        raise KeyError
+except KeyError:
+    CLONE_LOACTION = None
+try:
+    KOLOP_CRYPT = getConfig('KOLOP_CRYPT')
+    if len(PWSSD) == 0:
+        raise KeyError
+except KeyError:
+    KOLOP_CRYPT = None
 OWNER_ID = environ.get('OWNER_ID', '')
 if len(OWNER_ID) == 0:
     log_error("OWNER_ID variable is missing! Exiting now")
