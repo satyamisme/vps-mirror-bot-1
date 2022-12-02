@@ -10,8 +10,8 @@ from bot.helper.telegram_helper.filters import CustomFilters
 from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.mirror_utils.status_utils.clone_status import CloneStatus
 from bot import dispatcher, LOGGER, download_dict, download_dict_lock, Interval, config_dict
-from bot.helper.ext_utils.bot_utils import is_gdrive_link, new_thread, is_gdtot_link, is_gp_link, is_mdisk_link, is_dl_link, is_ouo_link, is_htp_link, is_rock_link, is_gt_link, is_psm_link, is_loan_link, is_ola_link, is_try2link_link, is_htpm_link, is_ez4_link
-from bot.helper.mirror_utils.download_utils.direct_link_generator import gdtot, gplinks, mdisk, dlbypass, ouo, htp, rock, gt, psm, loan, ola, try2link, htpm, ez4
+from bot.helper.ext_utils.bot_utils import is_gdrive_link, new_thread, is_gdtot_link, is_gp_link, is_mdisk_link, is_dl_link, is_ouo_link, is_htp_link, is_rock_link, is_gt_link, is_psm_link, is_loan_link, is_ola_link, is_try2link_link, is_htpm_link, is_ez4_link, is_kolop_link
+from bot.helper.mirror_utils.download_utils.direct_link_generator import gdtot, gplinks, mdisk, dlbypass, ouo, htp, rock, gt, psm, loan, ola, try2link, htpm, ez4, kolop_dl
 from bot.helper.ext_utils.exceptions import DirectDownloadLinkException
 
 
@@ -87,7 +87,7 @@ def _clone(message, bot):
             deleteMessage(bot, msg)
         except DirectDownloadLinkException as e:
             deleteMessage(bot, msg)
-            return sendMessage(str(e), bot, message)
+            return sendMessage(str(e), bot, message)'''
     is_kolop = is_kolop_link(link)
     if is_kolop:
         try:
@@ -96,7 +96,7 @@ def _clone(message, bot):
             deleteMessage(bot, msg)
         except DirectDownloadLinkException as e:
             deleteMessage(bot, msg)
-            return sendMessage(str(e), bot, message)'''
+            return sendMessage(str(e), bot, message)
     if is_gdrive_link(link):
         gd = GoogleDriveHelper()
         res, size, name, files = gd.helper(link)
