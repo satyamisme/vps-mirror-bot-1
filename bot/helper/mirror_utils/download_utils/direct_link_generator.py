@@ -23,7 +23,7 @@ from cfscrape import create_scraper
 from bs4 import BeautifulSoup
 from base64 import standard_b64encode, b64decode
 
-from bot import LOGGER, UPTOBOX_TOKEN, CRYPT, EMAIL, PWSSD, CLONE_LOACTION as GDRIVE_FOLDER_ID, KOLOP_CRYPT
+from bot import LOGGER, UPTOBOX_TOKEN, CRYPT, KOLOP_CRYPT
 from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.ext_utils.bot_utils import is_gdtot_link, is_gp_link, is_appdrive_link, is_mdisk_link, is_dl_link, is_ouo_link, is_htp_link, is_rock_link, is_kolop_link, is_gt_link, is_psm_link, is_loan_link, is_ola_link, is_try2link_link, is_htpm_link, is_ez4_link
 from bot.helper.ext_utils.exceptions import DirectDownloadLinkException
@@ -448,7 +448,7 @@ def gdtot(url: str) -> str:
         raise DirectDownloadLinkException("ERROR: Try in your broswer, mostly file not found or user limit exceeded!")
     return f'https://drive.google.com/open?id={decoded_id}'
 
-def appdrive_dl(url: str) -> str:
+'''def appdrive_dl(url: str) -> str:
     try:
         account = {"email": EMAIL, "passwd": PWSSD}
         client = cloudscraper.create_scraper(allow_brotli=False)
@@ -554,7 +554,7 @@ def appdrive_dl(url: str) -> str:
             return "Faced an Unknown Error!"
         return info_parsed["gdrive_link"]
     except BaseException:
-        raise DirectDownloadLinkException("ERROR: Try in your broswer, mostly file not found or user limit exceeded!")
+        raise DirectDownloadLinkException("ERROR: Try in your broswer, mostly file not found or user limit exceeded!")'''
 
 def gplinks(url: str):
     client = cloudscraper.create_scraper(allow_brotli=False)
