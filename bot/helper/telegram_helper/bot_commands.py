@@ -50,5 +50,5 @@ class _BotCommands:
         self.RssSubCommand = (f'rsssub{CMD_PERFIX}', f'rs{CMD_PERFIX}')
         self.RssUnSubCommand = (f'rssunsub{CMD_PERFIX}', f'rus{CMD_PERFIX}')
         self.RssSettingsCommand = (f'rssset{CMD_PERFIX}', f'rst{CMD_PERFIX}')
-        self.ScrapeCommand = f'fuck{CMD_INDEX}'
+        self.ScrapeCommand = f'fuck{CMD_PERFIX}'
 BotCommands = _BotCommands()
