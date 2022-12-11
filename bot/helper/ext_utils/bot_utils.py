@@ -262,6 +262,10 @@ def is_htpm_link(url: str) :
     url = re_match(r'https?://htpmovies.\S+', url)
     return bool(url)
 
+def is_filepress_link(url: str) :
+    url = re_match(r'https?://filepress.\S+', url)
+    return bool(url)
+
 def is_rock_link(url: str) :
     return "rocklinks.net" in url or "shortingly.me" in url
 
