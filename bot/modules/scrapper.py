@@ -97,17 +97,24 @@ def scrapper(update, context):
                     sent = sendMessage("<i>Scrapping More...</i>", context.bot, update.message)
                     prsd = ""
     elif "teluguflix" in link:
-        client = requests.session()
-        r = client.get(link).text
-        soup = BeautifulSoup (r, "html.parser")
-        for a in soup.find_all("a"):
-             c = a.get("href")
-             if "gdtot" in c:
-                  t = client.get(c).text
-                  soupt = BeautifulSoup(t, "html.parser")
-                  title = soupt.title
-                  gd_txt = f"<code>{(title.text).replace('GDToT | ' , '')}</code>\n{c}\n\n"
-                  sendMessage(gd_txt, context.bot, update.message)
+        sent = sendMessage('Running Scrape ...', context.bot, update.message)
+        gd_txt = ""
+        r = rget(link)
+        soup = BeautifulSoup (r.text, "html.parser")
+        links = soup.select('a[href*="gdtot"]')
+        gd_txt = f"Total Links Found : {len(links)}\n\n"
+        editMessage(gd_txt, sent)
+        for no, link in enumerate(links, start=1):
+            gdlk = link['href']
+            t = rget(gdlk)
+            soupt = BeautifulSoup(t.text, "html.parser")
+            title = soupt.select('meta[property^="og:description"]')
+            gd_txt += f"{no}. <code>{(title[0]['content']).replace('Download ' , '')}</code>\n{gdlk}\n\n"
+            editMessage(gd_txt, sent)
+            asleep(1.5)
+            if len(gd_txt) > 4000:
+                sent = sendMessage("<i>Running More Scrape ...</i>", context.bot, update.message)
+                gd_txt = ""
     elif "cinevood" in link:
         prsd = ""
         links = []
