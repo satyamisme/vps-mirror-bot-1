@@ -30,3 +30,4 @@ cloudscraper
 xattr
 yt-dlp
 cfscrape
+playwright
