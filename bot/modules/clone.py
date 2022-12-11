@@ -162,7 +162,6 @@ def _clone(message, bot):
             msg = sendMessage(f"Processing: <code>{link}</code>", bot, message)
             link = filepress(link)
             deleteMessage(bot, msg)
-            msg = sendMessage(f"filepress_bypassed-Jack:<code>{link}</code>", bot, message) 
         except DirectDownloadLinkException as e:
             deleteMessage(bot, msg)
             return sendMessage(str(e), bot, message)
