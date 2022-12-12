@@ -241,7 +241,7 @@ def is_ouo_link(url: str):
     return "ouo.io" in url or "ouo.press" in url
 
 def is_mdisk_link(url: str):
-    return "mdisk.me" in url
+    return "mdisk.me" in url or "mdisk.pro" in url
 
 def is_try2link_link(url: str):
     return "try2link.com" in url
