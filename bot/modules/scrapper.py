@@ -115,6 +115,17 @@ def scrapper(update, context):
             if len(gd_txt) > 4000:
                 sent = sendMessage("<i>Running More Scrape ...</i>", context.bot, update.message)
                 gd_txt = ""
+    elif "benzmovies" in link:
+         client = requests.session()
+         r = client.get(url).text
+         soup = BeautifulSoup (r, "html.parser")
+         links = soup.select('a[href*="filepress"]')
+         gd_txt = f"Total Links Found : {len(links)}\n\n"
+         sendMessage(gd_txt, context.bot, update.message)
+         for a in links:
+             link = a["href"]
+             sendMessage(link,context.bot,update.message)
+             
     elif "cinevood" in link:
         prsd = ""
         links = []
