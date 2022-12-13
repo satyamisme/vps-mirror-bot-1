@@ -117,7 +117,7 @@ def scrapper(update, context):
                 gd_txt = ""
     elif "benzmovies" in link:
          client = requests.session()
-         r = client.get(url).text
+         r = client.get(link).text
          soup = BeautifulSoup (r, "html.parser")
          links = soup.select('a[href*="filepress"]')
          gd_txt = f"Total Links Found : {len(links)}\n\n"
