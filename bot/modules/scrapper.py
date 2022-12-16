@@ -131,7 +131,7 @@ def scrapper(update, context):
         links = []
         res = rget(link)
         soup = BeautifulSoup(res.text, 'html.parser')
-        links = soup.select('a[href*="filepress"]')
+        links = soup.select('a[href^="https://filepress.lol/file"]')
         gd_txt = f"Total Links Found : {len(links)}\n\n"
         sendMessage(gd_txt, context.bot, update.message)
         for a in links:
