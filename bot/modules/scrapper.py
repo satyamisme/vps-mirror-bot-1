@@ -131,20 +131,13 @@ def scrapper(update, context):
         links = []
         res = rget(link)
         soup = BeautifulSoup(res.text, 'html.parser')
-        x = soup.select('a[href^="https://kolop.icu/file"]')
-        for a in x:
-            links.append(a['href'])
-        for o in links:
-            res = rget(o)
-            soup = BeautifulSoup(res.content, "html.parser")
-            title = soup.title.string
-            reftxt = resub(r'Kolop \| ', '', title)
-            prsd += f'{reftxt}\n{o}\n\n'
-            if len(prsd) > 4000:
-                sendMessage(prsd, context.bot, update.message)
-                prsd = ""
-        if prsd != "":
-            sendMessage(prsd, context.bot, update.message)
+        links = soup.select('a[href*="filepress"]')
+        gd_txt = f"Total Links Found : {len(links)}\n\n"
+        sendMessage(gd_txt, context.bot, update.message)
+        for a in links:
+             link = a["href"]
+             sendMessage(link,context.bot,update.message)
+             
     elif "atishmkv" in link:
         prsd = ""
         links = []
