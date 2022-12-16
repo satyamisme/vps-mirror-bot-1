@@ -558,35 +558,29 @@ def gdtot(url: str) -> str:
         raise DirectDownloadLinkException("ERROR: Try in your broswer, mostly file not found or user limit exceeded!")'''
 
 def gplinks(url: str):
-    client = cloudscraper.create_scraper(allow_brotli=False)
-    p = urlparse(url)
-    final_url = f'{p.scheme}://{p.netloc}/links/go'
+       url = url[:-1] if url[-1] == '/' else url
+       token = url.split("/")[-1]
+    
+       domain ="https://gplinks.co/"
+       referer = "https://mynewsmedia.co/"
 
-    res = client.head(url)
-    header_loc = res.headers['location']
-    url = url[:-1] if url[-1] == '/' else url
+    
+       client = requests.Session()
+       vid = client.get(url, allow_redirects= False).headers["Location"].split("=")[-1]
+       url = f"{url}/?{vid}"
 
-    param = url.split("/")[-1]
-    req_url = f'{p.scheme}://{p.netloc}/{param}'
-    p = urlparse(header_loc)
-    ref_url = f'{p.scheme}://{p.netloc}/'
+       response = client.get(url, allow_redirects=False)
+       soup = BeautifulSoup(response.content, "html.parser")
+    
+    
+       inputs = soup.find(id="go-link").find_all(name="input")
+       data = { input.get('name'): input.get('value') for input in inputs }
+    
 
-    h = { 'referer': ref_url }
-    res = client.get(req_url, headers=h, allow_redirects=False)
-
-    bs4 = BeautifulSoup(res.content, 'html.parser')
-    inputs = bs4.find_all('input')
-    data = { input.get('name'): input.get('value') for input in inputs }
-
-    h = {
-        'referer': ref_url,
-        'x-requested-with': 'XMLHttpRequest',
-    }
-    time.sleep(10)
-    res = client.post(final_url, headers=h, data=data)
-    try:
-        return res.json()['url'].replace('\/','/')
-    except: return 'Something went wrong :('
+       time.sleep(5)
+       headers={"x-requested-with": "XMLHttpRequest"}
+       bypassed_url = client.post(domain+"links/go", data=data, headers=headers).json()["url"]
+       return bypassed_url
 
 def mdisk(url: str) -> str:
 
