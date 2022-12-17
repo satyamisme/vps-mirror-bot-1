@@ -256,7 +256,7 @@ def is_dl_link(url: str):
     return "droplink.co" in url
 
 def is_htp_link(url: str) :
-    return "toonworld4all.me" in url or "shortingly.in" in url
+    return "toonworld4all.me" in url or "shortingly.in" in url or "gplinks.in" in url
 
 def is_htpm_link(url: str) :
     url = re_match(r'https?://htpmovies.\S+', url)
