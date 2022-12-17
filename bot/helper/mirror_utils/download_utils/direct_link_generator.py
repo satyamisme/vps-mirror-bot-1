@@ -429,55 +429,8 @@ def uploadee(url: str) -> str:
     except:
         raise DirectDownloadLinkException(f"ERROR: Failed to acquire download URL from upload.ee for : {url}")
         
-def gdtot(url: str) -> str:
-    """ Gdtot google drive link generator
-    By https://github.com/majnurangeela/BypassBot/blob/main/gdtot.py """
-
-    if CRYPT is None:
-        raise DirectDownloadLinkException("ERROR: CRYPT variable not provided")
-
-    client = requests.Session()
-    client.cookies.update({ 'crypt': CRYPT })
-    res = client.get(url)
-    title = re.findall(r">(.*?)<\/h5>", res.text)[0]
-    info = re.findall(r'<td\salign="right">(.*?)<\/td>', res.text)
-    info = {
-        'error': True,
-        'message': 'Link Invalid.',
-        'title': title,
-        'size': info[0],
-        'date': info[1]
-    }
-    new_gdtot = requests.get("https://new3.gdtot.cfd/").url
-
-    info['src_url'] = url
-    res = client.get(f"{new_gdtot}dld?id={url.split('/')[-1]}")
-    try:
-        url = re.findall('URL=(.*?)"', res.text)[0]
-        print(url)
-    except:
-        info['message'] = 'The requested URL could not be retrieved.',
-        return info
-
-    params = parse_qs(urlparse(url).query)
-
-    if 'msgx' in params:
-        info['message'] = params['msgx'][0]
-    if 'gd' not in params or not params['gd'] or params['gd'][0] == 'false':
-        return info
-
-    try:
-        decoded_id = base64.b64decode(str(params['gd'][0])).decode('utf-8')
-        gdrive_url = f'https://drive.google.com/open?id={decoded_id}'
-        info['message'] = 'Success.'
-    except:
-        info['error'] = True
-        return info
-
-    info['gdrive_link'] = gdrive_url
-    return info
   
-"""def gdtot(url: str) -> str:
+def gdtot(url: str) -> str:
     """ Gdtot google drive link generator
     By https://github.com/xcscxr """
 
@@ -495,7 +448,7 @@ def gdtot(url: str) -> str:
         decoded_id = b64decode(str(matches[0])).decode('utf-8')
     except:
         raise DirectDownloadLinkException("ERROR: Try in your broswer, mostly file not found or user limit exceeded!")
-    return f'https://drive.google.com/open?id={decoded_id}'"""
+    return f'https://drive.google.com/open?id={decoded_id}'
 
 '''def appdrive_dl(url: str) -> str:
     try:
