@@ -3,6 +3,7 @@ import requests
 import re
 from re import S
 from requests import get
+from cfscrape import create_scraper
 from re import match as rematch, findall, sub as resub
 from asyncio import sleep as asleep
 from time import sleep
@@ -126,20 +127,20 @@ def scrapper(update, context):
              link = a["href"]
              sendMessage(link,context.bot,update.message)
     elif "themoviesboss" in link:
-          client = cloudscraper.create_scraper(allow_brotli=False)
-          r = rget(link).text
+          client = create_scraper()
+          r = client.get(link).text
           soup = BeautifulSoup (r, "html.parser")
           links = soup.select('a[href^="https://themoviesboss.mx/links"]')
           gd_txt = f"Total Links Found : {len(links)}\n\n"
           sendMessage(gd_txt, context.bot, update.message)
           for a in links:
              link = a["href"]
-             r = rget(link)
+             r = client.get(link)
              soup = BeautifulSoup(r.text, "html.parser")
              links1 = soup.select('a[href^="https://links.inbbotlist.com/links"]')
              for a in links1:
                 link = a["href"]
-                r = rget(link)
+                r = client.get(link)
                 soup = BeautifulSoup(r.text, "html.parser")
                 links = soup.select('a[href^="https://filepress.lol/file"]')
                 for a in links:
