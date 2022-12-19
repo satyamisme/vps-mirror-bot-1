@@ -129,19 +129,19 @@ def scrapper(update, context):
           client = requests.session()
           r = client.get(link).text
           soup = BeautifulSoup (r, "html.parser")
-          links = soup.select('a[href^="https://themoviesboss.mx/links/"]')
+          links = soup.select('a[href^="https://themoviesboss.mx/links"]')
           gd_txt = f"Total Links Found : {len(links)}\n\n"
           sendMessage(gd_txt, context.bot, update.message)
           for a in links:
              link = a["href"]
              r = client.get(link)
              soup = BeautifulSoup(r.text, "html.parser")
-             links1 = soup.select('a[href^="https://links.inbbotlist.com/links/"]')
+             links1 = soup.select('a[href^="https://links.inbbotlist.com/links"]')
              for a in links1:
                 link = a["href"]
                 r = client.get(link)
                 soup = BeautifulSoup(r.text, "html.parser")
-                links = soup.select('a[href^="https://filepress.lol/file/"]')
+                links = soup.select('a[href^="https://filepress.lol/file"]')
                 for a in links:
                     link = a["href"]
                     sendMessage(link,context.bot,update.message)  
