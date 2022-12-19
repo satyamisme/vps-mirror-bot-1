@@ -126,7 +126,7 @@ def scrapper(update, context):
              link = a["href"]
              sendMessage(link,context.bot,update.message)
     elif "themoviesboss" in link:
-          client = requests.session()
+          client = cloudscraper.create_scraper(allow_brotli=False)
           r = client.get(link).text
           soup = BeautifulSoup (r, "html.parser")
           links = soup.select('a[href^="https://themoviesboss.mx/links"]')
