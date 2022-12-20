@@ -708,21 +708,23 @@ def htp(url: str) -> str:
 
 def rock(url: str) -> str:
     client = cloudscraper.create_scraper(allow_brotli=False)
-    if 'rocklinks.net' in url:
-        DOMAIN = "https://blog.disheye.com"
-    else:
-        DOMAIN = "https://go.techyjeeshan.xyz"
+   
+    DOMAIN = "https://rl.techysuccess.com"
 
     url = url[:-1] if url[-1] == '/' else url
 
     code = url.split("/")[-1]
-    if 'rocklinks.net' in url:
-        final_url = f"{DOMAIN}/{code}?quelle=" 
-    else:
-        final_url = f"{DOMAIN}/{code}?quelle="
+    
+    
+    final_url = f"{DOMAIN}/{code}"
+    
+    ref = "https://disheye.com/"
+    
+    h = {"referer": ref}
 
-    resp = client.get(final_url)
+    resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
+    
     
     try: inputs = soup.find(id="go-link").find_all(name="input")
     except: return "Incorrect Link"
