@@ -128,7 +128,7 @@ def scrapper(update, context):
              sendMessage(link,context.bot,update.message)
     elif "themoviesboss" in link:
           client = create_scraper()
-          r = client.get(link).text
+          r = client.get(link,allow_redirects=True).text
           soup = BeautifulSoup (r, "html.parser")
           links = soup.select('a[href^="https://themoviesboss.mx/links"]')
           gd_txt = f"Total Links Found : {len(links)}\n\n"
